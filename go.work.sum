@@ -1,0 +1,5 @@
+github.com/yagrush/go-sample-module-a v0.0.1 h1:TIaeUtb38Ap7hX7JgMfPvtyD/CutMyEvSAQRod1pp1k=
+github.com/yagrush/go-sample-module-a v0.0.1/go.mod h1:c3ug+AaiH1SyD23ijZEnXF0csfQwseNy7KvwNAFl9Dc=
+golang.org/x/mod v0.8.0/go.mod h1:iBbtSCu2XBx23ZKBPSOrRkjjQPZFPuis4dIYUhu/chs=
+golang.org/x/term v0.17.0/go.mod h1:lLRBjIVuehSbZlaOtGMbcMncT+aqLLLmKrsjNrUguwk=
+golang.org/x/tools v0.6.0/go.mod h1:Xwgl3UAJ/d3gWutnCtw505GrjyAbvKui8lOU390QaIU=

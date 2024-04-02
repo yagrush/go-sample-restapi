@@ -1,0 +1,4 @@
+env: local
+host: localhost
+debug: true
+port: 8089
