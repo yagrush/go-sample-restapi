@@ -8,5 +8,5 @@ import (
 
 type SampleRepository interface {
 	GetFuga(context.Context) (*model.Fuga, error)
-	CalcAddInt64(c context.Context, a, b int64) (int64, error)
+	CalcAddInt64(context.Context, int64, int64) (int64, error)
 }
