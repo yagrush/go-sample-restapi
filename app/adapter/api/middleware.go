@@ -11,12 +11,15 @@ func Middleware(next Serve, method string) func(w http.ResponseWriter, req *http
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != method {
 			slog.Error("invalid request method")
+			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+
 		err := next(w, r)
 		if err != nil {
 			slog.Error(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
+			return
 		}
 	}
 }
