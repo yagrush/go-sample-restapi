@@ -4,13 +4,18 @@
 
 ---
 
-## run
+## build and run
 ```
-make run
+make start
+```
+
+## destroy
+```
+make down
 ```
 
 ### access to sample API: calcAddInt64
-http://localhost:8089/sample/calcAddInt64?a=5&b=9
+http://localhost:8083/sample/calcAddInt64?a=5&b=9
 
 ---
 
