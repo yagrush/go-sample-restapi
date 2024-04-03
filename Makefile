@@ -1,5 +1,20 @@
-test:
-	go test -race -shuffle=on ./...
+test-app:
+	go test -race -shuffle=on ./app/...
 
-run:
-	go run ./app/main.go
+up:
+	docker-compose up
+
+start:
+	docker-compose up --build -d
+
+stop:
+	docker-compose stop
+
+down:
+	docker-compose down
+
+log:
+	docker-compose logs -f
+
+sh-app:
+	docker container exec -it app sh

@@ -1,0 +1,20 @@
+version: '3'
+services:
+    app:
+        container_name: app
+        image: app
+        restart: always
+        build:
+            context: .
+            target: dev
+            dockerfile: ./app/Dockerfile
+            args:
+                GOPRIVATE: ${GOPRIVATE}
+        environment:
+            GOPRIVATE: github.com/yagrush
+        ports:
+            - 2349:2345
+            - 8083:8080
+        tty: true
+        volumes:
+            - ./app:/app
