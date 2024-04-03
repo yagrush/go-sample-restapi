@@ -12,7 +12,8 @@
       "cwd": "${workspaceRoot}/app",
       "port": 2349,
       "host": "localhost",
-      "dlvFlags": []
+      "showLog": true,
+      "trace": "verbose"
     }
   ]
 }
