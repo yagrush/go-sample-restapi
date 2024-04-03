@@ -28,7 +28,7 @@ func main() {
 	}
 	yaml.Unmarshal(b, &c)
 
-	mux, err := infrastructure.NewMux()
+	engine, err := infrastructure.NewEngine()
 	if err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
@@ -38,7 +38,7 @@ func main() {
 		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{http.MethodGet, http.MethodPost, http.MethodHead},
 		AllowedHeaders: []string{"Origin", "Accept", "Content-Type", "X-Requested-With", "x-api-key"},
-	}).Handler(mux)
+	}).Handler(engine)
 
 	server := http.Server{
 		Addr:    fmt.Sprintf(":%d", c.Port),
