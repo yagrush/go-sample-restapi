@@ -41,7 +41,7 @@ func main() {
 	}).Handler(mux)
 
 	server := http.Server{
-		Addr:    fmt.Sprintf("%s:%d", c.Host, c.Port),
+		Addr:    fmt.Sprintf(":%d", c.Port),
 		Handler: hndlr,
 	}
 
