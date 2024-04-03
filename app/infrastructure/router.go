@@ -1,33 +1,32 @@
 package infrastructure
 
 import (
-	"net/http"
-
-	"github.com/go-playground/validator/v10"
+	"github.com/gin-gonic/gin"
 	"github.com/yagrush/go-sample-restapi/app/adapter/api"
 	"github.com/yagrush/go-sample-restapi/app/handler"
 	"github.com/yagrush/go-sample-restapi/app/infrastructure/persistence"
 	"github.com/yagrush/go-sample-restapi/app/usecase"
-	"github.com/yagrush/go-sample-restapi/app/util"
 )
 
-func NewMux() (*http.ServeMux, error) {
-	mux := http.NewServeMux()
-	vali := validator.New()
+func NewEngine() (*gin.Engine, error) {
+	engine := gin.Default()
+	engine.Use(api.Middleware())
 
-	mux.HandleFunc("/sample/fuga", api.Middleware(util.New(handler.SampleFugaHandler{
-		U: usecase.SampleFugaUsecase{
-			R: persistence.NewSamplePersistence(),
-		},
-		V: vali,
-	}).Serve, http.MethodGet))
+	engine.GET("/api/v1/sample/fuga", func(c *gin.Context) {
+		c.JSON(handler.SampleFugaHandler{
+			U: usecase.SampleFugaUsecase{
+				R: persistence.NewSamplePersistence(),
+			},
+		}.Serve(c))
+	})
 
-	mux.HandleFunc("/sample/calcAddInt64", api.Middleware(util.New(handler.SampleCalcAddInt64Handler{
-		U: usecase.SampleCalcAddInt64Usecase{
-			R: persistence.NewSamplePersistence(),
-		},
-		V: vali,
-	}).Serve, http.MethodGet))
+	engine.GET("/api/v1/sample/calcAddInt64", func(c *gin.Context) {
+		c.JSON(handler.SampleCalcAddInt64Handler{
+			U: usecase.SampleCalcAddInt64Usecase{
+				R: persistence.NewSamplePersistence(),
+			},
+		}.Serve(c))
+	})
 
-	return mux, nil
+	return engine, nil
 }
