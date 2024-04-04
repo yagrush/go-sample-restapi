@@ -31,7 +31,7 @@ services:
         volumes:
             - ./db/conf/:/etc/mysql/conf.d
             - sample-db-local:/var/lib/mysql
-            - ./db/log/:/var/log
+            - ./db/log/:/tmp/log
         user: 1000:1000
         environment:
             MYSQL_ROOT_PASSWORD: pass
