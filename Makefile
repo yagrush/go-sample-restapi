@@ -22,6 +22,15 @@ sh-app:
 sh-db:
 	docker container exec -it sample-db bash
 
+sh-kvs:
+	docker container exec -it sample-kvs bash
+
+tail-db:
+	docker container exec -it sample-db tail -f /tmp/log/db_query.log /tmp/log/mysqld.log
+
+tail-kvs:
+	docker container exec -it sample-kvs tail -f /var/log/redis/redis.log
+
 # downと同時に名前付きボリュームを全て削除する
 down-v:
 	docker-compose down --volume

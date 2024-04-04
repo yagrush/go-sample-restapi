@@ -19,6 +19,22 @@ services:
         volumes:
             - ./app:/app
 
+    kvs:
+        container_name: sample-kvs
+        image: sample-kvs
+        restart: always
+        build:
+            context: .
+            dockerfile: ./kvs/Dockerfile
+        ports:
+            - 6383:6379
+        volumes:
+            - ./kvs/data:/data
+            - ./kvs/log:/var/log/redis
+            - ./kvs/conf/redis.conf:/usr/local/etc/redis/redis.conf
+        command: redis-server /usr/local/etc/redis/redis.conf
+        user: 1000:1000
+
     db:
         container_name: sample-db
         image: sample-db

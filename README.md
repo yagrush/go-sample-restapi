@@ -4,6 +4,8 @@
 
 ---
 
+細かいhow to useは `Makefile` をご参照ください
+
 ## build and run
 ```
 make start
@@ -12,16 +14,33 @@ make start
 ## access to sample API: calcAddInt64
 http://localhost:8083/api/v1/sample/calcAddInt64?a=1&b=237
 
+
+## tail DB logs
+```
+make tail-db
+```
+
+## tail KVS logs
+```
+make tail-kvs
+```
+
 ## destroy
 ```
 make down
 ```
 
+## destroy with DB reest
+```
+make down-v
+```
+KVSのデータリセットは `kvs/data` を削除してください
+
 ---
 
-## test
+## test app
 ```
-make test
+make test-app
 ```
 
 ---

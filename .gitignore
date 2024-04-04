@@ -25,3 +25,6 @@ app/tmp
 
 db/data
 db/log
+
+kvs/data
+kvs/log
