@@ -1,8 +1,8 @@
 version: '3'
 services:
     app:
-        container_name: app
-        image: app
+        container_name: sample-app
+        image: sample-app
         restart: always
         build:
             context: .
@@ -18,3 +18,28 @@ services:
         tty: true
         volumes:
             - ./app:/app
+
+    db:
+        container_name: sample-db
+        image: sample-db
+        restart: always
+        build:
+            context: .
+            dockerfile: ./db/Dockerfile
+        ports:
+            - 3309:3306
+        volumes:
+            - ./db/conf/:/etc/mysql/conf.d
+            - sample-db-local:/var/lib/mysql
+            - ./db/log/:/var/log
+        user: 1000:1000
+        environment:
+            MYSQL_ROOT_PASSWORD: pass
+            MYSQL_DATABASE: sample
+            MYSQL_USER: sample
+            MYSQL_PASSWORD: sample
+            # TZ: ${TZ} # world wideなサービスならUTC+0にしたい
+
+volumes:
+    # 名前付きボリュームを消すと docker-entrypoint-initdb.d がまた走る
+    sample-db-local:

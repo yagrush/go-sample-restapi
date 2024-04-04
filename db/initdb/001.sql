@@ -1,0 +1,9 @@
+CREATE SCHEMA IF NOT EXISTS `fuga`;
+
+USE `fuga`;
+
+CREATE TABLE IF NOT EXISTS `fuga` (
+  `id` BIGINT NOT NULL,
+  `memo` VARCHAR(50) NOT NULL,
+  `created_at` DATETIME NOT NULL,
+  PRIMARY KEY (`id`));

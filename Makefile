@@ -17,4 +17,15 @@ log:
 	docker-compose logs -f
 
 sh-app:
-	docker container exec -it app sh
+	docker container exec -it sample-app sh
+
+sh-db:
+	docker container exec -it sample-db bash
+
+# downと同時に名前付きボリュームを全て削除する
+down-v:
+	docker-compose down --volume
+
+# 未使用のDcokerオブジェクトを掃除する
+docker-prune:
+	docker system prune -a
