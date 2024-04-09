@@ -28,7 +28,7 @@ func main() {
 	}
 	yaml.Unmarshal(b, &c)
 
-	engine, err := infrastructure.NewEngine()
+	engine, err := infrastructure.NewEngine(c)
 	if err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
