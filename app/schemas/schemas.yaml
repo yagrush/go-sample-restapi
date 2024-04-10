@@ -1,0 +1,227 @@
+openapi: "3.0.3"
+info:
+  version: 1.0.0
+  title: go-sample-restapi
+  description: |
+    自分流のクリーンアーキテクチャを育てていくリポジトリ
+    
+servers:
+  - url: "{protocol}://{host}:{port}"
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+      host:
+        default: localhost
+      port:
+        enum:
+          - '8080'
+          - '8083'
+          - '443'
+        default: '8083'
+
+paths:
+  /api/v1/sample/fuga:
+    get:
+      operationId: sampleFuga
+      description: |
+        fugaという文字列を返す
+      responses:
+        200:
+          description: |
+            通信が成功した場合のレスポンス
+          content:
+            text/html:
+              schema:
+                type: string
+                x-go-type: string
+                example: fuga
+  /api/v1/sample/calcAddInt64:
+    get:
+      operationId: sampleCalcAddInt64
+      description: |
+        クエリパラメータ a と b を足し算した結果の数字を返す
+      parameters:
+        - name: a
+          description: 数字 a
+          in: query
+          required: true
+          style: form
+          example: 22
+          schema:
+            type: integer
+            x-go-type: int64
+            x-oapi-codegen-extra-tags:
+              validate: required
+        - name: b
+          description: 数字 b
+          in: query
+          required: true
+          style: form
+          example: 33
+          schema:
+            type: integer
+            x-go-type: int64
+            x-oapi-codegen-extra-tags:
+              validate: required
+      responses:
+        200:
+          description: |
+            通信が成功した場合のレスポンス
+          content:
+            text/html:
+              schema:
+                type: integer
+                x-go-type: int64
+                example: 55
+                x-oapi-codegen-extra-tags:
+                  validate: required
+  # /api/v1/sample/hige:
+  #   parameters:
+  #     - $ref: '#/components/parameters/SessionID'
+  #   post:
+  #     operationId: sampleHige
+  #     summary: |
+  #       リクエストボディの hoge で指定された文字列の後ろに _hige と付け加えた文字列を返す
+  #     description: |
+  #       リクエストボディの hoge で指定された文字列の後ろに _hige と付け加えた文字列を返す
+  #       ただしhogeに9文字以上を指定するとエラーを返す
+  #     requestBody:
+  #       content:
+  #         'application/json':
+  #           schema:
+  #             required:
+  #             - hoge
+  #             type: object
+  #             properties:
+  #               hoge:
+  #                 type: string
+  #                 x-go-type: string
+  #                 description: 適当な文字列
+  #                 example: hogehoge
+  #                 x-oapi-codegen-extra-tags:
+  #                   validate: required,min=1,max=8
+  #       required: true
+  #     responses:
+  #       200:
+  #         description: |
+  #           通信が成功した場合のレスポンス
+  #           処理結果の成否は別途result_codeを参照すること
+  #         content:
+  #           application/json:
+  #             schema:
+  #               allOf:
+  #                 - type: object
+  #                 - properties:
+  #                     result_code:
+  #                       $ref: "./refs/result_code.yml"
+  #                 - required:
+  #                     - result_code
+  #     x-codegen-request-body-name: body
+
+components:
+  schemas:
+    GenericObject:
+      type: object
+    CustomStringType:
+      type: string
+      format: custom
+      x-oapi-codegen-extra-tags:
+        foo: bar
+    NullableProperties:
+      type: object
+      properties:
+        optional:
+          type: string
+          nullable: false
+        optionalAndNullable:
+          type: string
+          nullable: true
+        required:
+          type: string
+          nullable: false
+        requiredAndNullable:
+          type: string
+          nullable: true
+      required: [ required, requiredAndNullable ]
+    5StartsWithNumber:
+      type: object
+      description: This schema name starts with a number
+    EnumInObjInArray:
+      type: array
+      items:
+        type: object
+        properties:
+          val:
+            type: string
+            enum:
+              - first
+              - second
+    DeprecatedProperty:
+      type: object
+      required:
+        - newProp
+        - oldProp
+      properties:
+        newProp:
+          type: string
+          description: Use this now!
+        oldProp1:
+          type: string
+          deprecated: true
+          # description: No description on this one to test generation in that case
+        oldProp2:
+          type: string
+          deprecated: true
+          description: It used to do this and that
+        oldProp3:
+          type: string
+          deprecated: true
+          x-deprecated-reason: Use NewProp instead!
+        oldProp4:
+          type: string
+          deprecated: true
+          x-deprecated-reason: Use NewProp instead!
+          description: It used to do this and that
+    OuterTypeWithAnonymousInner:
+      type: object
+      properties:
+        name:
+          type: string
+        inner:
+          type: object
+          x-go-type-name: InnerRenamedAnonymousObject
+          properties:
+            id:
+              type: integer
+          required: [ id ]
+      required: [ name, inner ]
+  parameters:
+    SessionID:
+      name: x-api-key
+      in: header
+      description: セッションID
+      required: true
+      schema:
+        type: string
+      example: 182471947acb183bcd139842134
+    StringInPath:
+      name: str
+      description: A string path parameter
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    # This security scheme has a - in it, we need to make sure the name gets
+    # remapped to a valid Go id. See bug
+    access-token:
+      type: http
+      scheme: bearer
+      bearerFormat: |
+        JWT-format access token.
+
+security:
+  - access-token: [ ]
