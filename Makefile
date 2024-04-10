@@ -1,3 +1,9 @@
+generate:
+	git ls-files '**/*go.mod' -z | xargs -0 -I{} bash -xc 'cd $$(dirname {}) && make generate'
+
+tidy:
+	git ls-files '**/*go.mod' -z | xargs -0 -I{} bash -xc 'cd $$(dirname {}) && go mod tidy'
+
 test-app:
 	go test -race -shuffle=on ./app/...
 

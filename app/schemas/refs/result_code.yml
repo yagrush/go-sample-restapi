@@ -1,0 +1,8 @@
+type: integer
+x-go-type: uint32
+example: 0
+description: |
+  0: 正常
+  0以外: 正常系エラー
+x-oapi-codegen-extra-tags:
+  validate: required

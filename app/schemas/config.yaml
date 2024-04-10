@@ -1,0 +1,20 @@
+package: schemas
+generate:
+  gin-server: true
+  chi-server: false     # ChiServer specifies whether to generate chi server boilerplate
+  echo-server: false    # EchoServer specifies whether to generate echo server boilerplate
+  gorilla-server: false # GorillaServer specifies whether to generate Gorilla server boilerplate
+  strict-server: false  # Strict specifies whether to generate strict server wrapper
+  client: false         # Client specifies whether to generate client boilerplate
+  models: true          # Models specifies whether to generate type definitions
+  embedded-spec: false  # Whether to embed the swagger spec in the generated code
+output: schemas.gen.go
+output-options:
+  skip-fmt: false           # Whether to skip go imports on the generated code
+  skip-prune: true         # Whether to skip pruning unused components on the generated code
+  include-tags: []          # []string           Only include operations that have one of these tags. Ignored when empty.
+  exclude-tags: []          # []string           Exclude operations that have one of these tags. Ignored when empty.
+  #user-templates:          # map[string]string  Override built-in templates from user-provided files
+  exclude-schemas: []       # []string           Exclude from generation schemas with given names. Ignored when empty.
+  response-type-suffix: res # The suffix used for responses types
+  client-type-name:         # Override the default generated client type with the value

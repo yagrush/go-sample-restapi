@@ -2,3 +2,7 @@ env: dev
 debug: true
 port: 8080
 server-log-file: /tmp/server.log
+
+app:
+  url: http://localhost:8083
+  port: 8083

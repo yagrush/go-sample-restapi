@@ -11,13 +11,14 @@ type SampleFugaUsecase struct {
 	R repository.SampleRepository
 }
 
-func (u *SampleFugaUsecase) Serve(c *gin.Context) (int, gin.H) {
+func (u *SampleFugaUsecase) Serve(c *gin.Context) {
 	m, err := u.R.GetFuga(c)
 	if err != nil {
-		return http.StatusInternalServerError, nil
+		c.JSON(http.StatusInternalServerError, nil)
+		return
 	}
 
-	return http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"message": m.GetMessage(),
-	}
+	})
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/yagrush/go-sample-restapi/app/handler"
 	"github.com/yagrush/go-sample-restapi/app/infrastructure/config"
 	"github.com/yagrush/go-sample-restapi/app/infrastructure/persistence"
+	"github.com/yagrush/go-sample-restapi/app/schemas"
 	"github.com/yagrush/go-sample-restapi/app/usecase"
 )
 
@@ -17,22 +18,19 @@ func NewEngine(c config.Config) (*gin.Engine, error) {
 	gin.DefaultWriter = io.MultiWriter(os.Stdout, f)
 
 	engine := gin.Default()
-	engine.Use(api.Middleware())
 
-	engine.GET("/api/v1/sample/fuga", func(c *gin.Context) {
-		c.JSON(handler.SampleFugaHandler{
-			U: usecase.SampleFugaUsecase{
-				R: persistence.NewSamplePersistence(),
-			},
-		}.Serve(c))
-	})
-
-	engine.GET("/api/v1/sample/calcAddInt64", func(c *gin.Context) {
-		c.JSON(handler.SampleCalcAddInt64Handler{
-			U: usecase.SampleCalcAddInt64Usecase{
-				R: persistence.NewSamplePersistence(),
-			},
-		}.Serve(c))
+	samplePersistence := persistence.NewSamplePersistence()
+	schemas.RegisterHandlersWithOptions(engine, &handler.Handler{
+		SampleFugaUsecase: usecase.SampleFugaUsecase{
+			R: samplePersistence,
+		},
+		SampleCalcAddInt64Usecase: usecase.SampleCalcAddInt64Usecase{
+			R: samplePersistence,
+		},
+	}, schemas.GinServerOptions{
+		Middlewares: []schemas.MiddlewareFunc{
+			api.Middleware(),
+		},
 	})
 
 	return engine, nil

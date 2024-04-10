@@ -2,21 +2,20 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/yagrush/go-sample-restapi/app/schemas"
 	"github.com/yagrush/go-sample-restapi/app/usecase"
 )
 
-type SampleFugaHandler struct {
-	U usecase.SampleFugaUsecase
+type Handler struct {
+	schemas.ServerInterface
+	SampleFugaUsecase         usecase.SampleFugaUsecase
+	SampleCalcAddInt64Usecase usecase.SampleCalcAddInt64Usecase
 }
 
-func (h SampleFugaHandler) Serve(c *gin.Context) (int, gin.H) {
-	return h.U.Serve(c)
+func (h Handler) SampleFuga(c *gin.Context) {
+	h.SampleFugaUsecase.Serve(c)
 }
 
-type SampleCalcAddInt64Handler struct {
-	U usecase.SampleCalcAddInt64Usecase
-}
-
-func (h SampleCalcAddInt64Handler) Serve(c *gin.Context) (int, gin.H) {
-	return h.U.Serve(c)
+func (h Handler) SampleCalcAddInt64(c *gin.Context, params schemas.SampleCalcAddInt64Params) {
+	h.SampleCalcAddInt64Usecase.Serve(c, params)
 }
