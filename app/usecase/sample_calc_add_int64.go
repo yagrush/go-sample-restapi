@@ -14,7 +14,7 @@ type SampleCalcAddInt64Usecase struct {
 	R repository.SampleRepository
 }
 
-func (u *SampleCalcAddInt64Usecase) Serve(c *gin.Context, params schemas.SampleCalcAddInt64Params) {
+func (u SampleCalcAddInt64Usecase) Serve(c *gin.Context, params schemas.SampleCalcAddInt64Params) {
 	aStr := c.Request.FormValue("a")
 	a, err := strconv.ParseInt(aStr, 10, 64)
 	if err != nil {
