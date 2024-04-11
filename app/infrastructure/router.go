@@ -10,7 +10,6 @@ import (
 	"github.com/yagrush/go-sample-restapi/app/infrastructure/config"
 	"github.com/yagrush/go-sample-restapi/app/infrastructure/persistence"
 	"github.com/yagrush/go-sample-restapi/app/schemas"
-	"github.com/yagrush/go-sample-restapi/app/usecase"
 )
 
 func NewEngine(c config.Config) (*gin.Engine, error) {
@@ -19,14 +18,8 @@ func NewEngine(c config.Config) (*gin.Engine, error) {
 
 	engine := gin.Default()
 
-	samplePersistence := persistence.NewSamplePersistence()
 	schemas.RegisterHandlersWithOptions(engine, &handler.Handler{
-		SampleFugaUsecase: usecase.SampleFugaUsecase{
-			R: samplePersistence,
-		},
-		SampleCalcAddInt64Usecase: usecase.SampleCalcAddInt64Usecase{
-			R: samplePersistence,
-		},
+		R: persistence.SamplePersistence{},
 	}, schemas.GinServerOptions{
 		Middlewares: []schemas.MiddlewareFunc{
 			api.Middleware(),
