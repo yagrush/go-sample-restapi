@@ -9,13 +9,13 @@ import (
 
 type Handler struct {
 	schemas.ServerInterface
-	R repository.SampleRepository
+	SampleRepository repository.SampleRepository
 }
 
 func (h Handler) SampleFuga(c *gin.Context) {
-	new(usecase.SampleFugaUsecase).Serve(c, h.R)
+	new(usecase.SampleFugaUsecase).Serve(c, h.SampleRepository)
 }
 
 func (h Handler) SampleCalcAddInt64(c *gin.Context, params schemas.SampleCalcAddInt64Params) {
-	new(usecase.SampleCalcAddInt64Usecase).Serve(c, h.R, params)
+	new(usecase.SampleCalcAddInt64Usecase).Serve(c, h.SampleRepository, params)
 }
