@@ -19,7 +19,7 @@ func NewEngine(c config.Config) (*gin.Engine, error) {
 	engine := gin.Default()
 
 	schemas.RegisterHandlersWithOptions(engine, &handler.Handler{
-		R: persistence.SamplePersistence{},
+		SampleRepository: persistence.SamplePersistence{},
 	}, schemas.GinServerOptions{
 		Middlewares: []schemas.MiddlewareFunc{
 			api.Middleware(),
