@@ -7,12 +7,10 @@ import (
 	"github.com/yagrush/go-sample-restapi/app/domain/repository"
 )
 
-type SampleFugaUsecase struct {
-	R repository.SampleRepository
-}
+type SampleFugaUsecase struct{}
 
-func (u SampleFugaUsecase) Serve(c *gin.Context) {
-	m, err := u.R.GetFuga(c)
+func (u SampleFugaUsecase) Serve(c *gin.Context, r repository.SampleRepository) {
+	m, err := r.GetFuga(c)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, nil)
 		return

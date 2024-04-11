@@ -10,11 +10,9 @@ import (
 	"github.com/yagrush/go-sample-restapi/app/schemas"
 )
 
-type SampleCalcAddInt64Usecase struct {
-	R repository.SampleRepository
-}
+type SampleCalcAddInt64Usecase struct{}
 
-func (u SampleCalcAddInt64Usecase) Serve(c *gin.Context, params schemas.SampleCalcAddInt64Params) {
+func (u SampleCalcAddInt64Usecase) Serve(c *gin.Context, r repository.SampleRepository, params schemas.SampleCalcAddInt64Params) {
 	aStr := c.Request.FormValue("a")
 	a, err := strconv.ParseInt(aStr, 10, 64)
 	if err != nil {
@@ -33,7 +31,7 @@ func (u SampleCalcAddInt64Usecase) Serve(c *gin.Context, params schemas.SampleCa
 		return
 	}
 
-	ret, err := u.R.CalcAddInt64(c, a, b)
+	ret, err := r.CalcAddInt64(c, a, b)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"errorMessage": fmt.Errorf("error: CalcAddInt64"),
